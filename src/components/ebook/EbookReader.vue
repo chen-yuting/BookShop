@@ -20,6 +20,7 @@ export default {
     initEpub() {
       const url = "http://192.168.34.48:8081/epub/" + this.fileName + ".epub";
       this.book = new Epub(url);
+      this.setCurrentBook(this.book);
       this.rendition = this.book.renderTo("read", {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -44,6 +45,14 @@ export default {
         }
         event.stopPropagation();
       });
+      this.rendition.hooks.content.register((content) => {
+        Promise.all([
+          content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`),
+          content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`),
+          content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`),
+          content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`),
+        ]).then(() => {});
+      });
     },
     prevPage() {
       if (this.rendition) {
@@ -59,9 +68,13 @@ export default {
     },
     toggleTitleAndMenu() {
       this.setMenuVisible(!this.menuVisible);
+      this.setSettingVisible(-1);
+      this.setFontFamilyVisible(false);
     },
     hideTitleAndMenu() {
       this.setMenuVisible(false);
+      this.setSettingVisible(-1);
+      this.setFontFamilyVisible(false);
     },
   },
 };

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+// http://localhost:8080/#/ebook/Laws|2015_Book_ProtectingTheRightsOfPeopleWit
 import EbookReader from "../../components/ebook/EbookReader";
 import EbookTitle from "../../components/ebook/EbookTitle";
 import EbookMenu from "../../components/ebook/EbookMenu";

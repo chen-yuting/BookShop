@@ -1,25 +1,38 @@
 <template>
   <div>
     <transition name="slide-up">
-      <div class="menu-wrapper" :class="{'hide-box-shadow':!menuVisible}" v-show="menuVisible">
+      <div class="menu-wrapper" :class="{'hide-box-shadow':!menuVisible || settingVisible>=0}" v-show="menuVisible">
         <div class="icon-wrapper">
+          <!-- 目录 -->
           <span class="icon-menu icon" @click="showSetting(3)"></span>
+          <!-- 进度 -->
           <span class="icon-progress icon" @click="showSetting(2)"></span>
+          <!-- 主题 -->
           <span class="icon-bright icon" @click="showSetting(1)"></span>
+          <!-- 字号 -->
           <span class="icon-A icon" @click="showSetting(0)"></span>
         </div>
       </div>
     </transition>
+    <ebook-setting-font></ebook-setting-font>
+    <ebook-setting-font-popup></ebook-setting-font-popup>
   </div>
 </template>
 
 <script>
-
+import EbookSettingFont from "./EbookSettingFont";
+import EbookSettingFontPopup from "./EbookSettingFontPopup";
 import { ebookMixin } from "../../utils/mixin";
 export default {
   mixins: [ebookMixin],
+  components: {
+    EbookSettingFont,
+    EbookSettingFontPopup,
+  },
   methods: {
-    showSetting(key) {},
+    showSetting(key) {
+      this.setSettingVisible(key);
+    },
   },
 };
 </script>
