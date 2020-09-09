@@ -16,6 +16,7 @@ import {
   saveFontSize,
   saveTheme,
 } from "../../utils/localStorage";
+import { flatten } from "../../utils/book";
 global.ePub = Epub;
 export default {
   mixins: [ebookMixin],
@@ -46,12 +47,6 @@ export default {
 
     toggleTitleAndMenu() {
       this.setMenuVisible(!this.menuVisible);
-      this.setSettingVisible(-1);
-      this.setFontFamilyVisible(false);
-    },
-
-    hideTitleAndMenu() {
-      this.setMenuVisible(false);
       this.setSettingVisible(-1);
       this.setFontFamilyVisible(false);
     },
@@ -151,6 +146,34 @@ export default {
       });
     },
 
+    parseBook() {
+      this.book.loaded.cover.then((cover) => {
+        this.book.archive.createUrl(cover).then((url) => {
+          this.setCover(url);
+        });
+        this.book.loaded.metadata.then((metadata) => {
+          this.setMetadata(metadata);
+        });
+        this.book.loaded.navigation.then((navigation) => {
+          const navItem = flatten(navigation.toc);
+          function find(item, level = 0) {
+            return !item.parent
+              ? level
+              : find(
+                  navItem.filter(
+                    (parentItem) => parentItem.id == item.parent
+                  )[0],
+                  ++level
+                );
+          }
+          navItem.forEach((item) => {
+            item.level = find(item);
+          });
+          this.setNavigation(navItem);
+        });
+      });
+    },
+
     initEpub() {
       const url =
         `${process.env.VUE_APP_RES_URL}/epub/` + this.fileName + ".epub";
@@ -158,6 +181,7 @@ export default {
       this.setCurrentBook(this.book);
       this.initRendition();
       this.initGesture();
+      this.parseBook();
       this.book.ready
         .then(() => {
           return this.book.locations.generate(

@@ -38,18 +38,12 @@
 </template>
 
 <script>
-import { getReadTime } from "../../utils/localStorage";
 import { ebookMixin } from "../../utils/mixin";
 export default {
   mixins: [ebookMixin],
   computed: {
     getSectionName() {
-      if (this.section) {
-        const sectionInfo = this.currentBook.section(this.section);
-        if (sectionInfo && sectionInfo.href) {
-          return this.currentBook.navigation.get(sectionInfo.href).label;
-        }
-      }
+      return this.section ? this.navigation[this.section].label : "";
     },
   },
   methods: {
@@ -94,17 +88,6 @@ export default {
     },
     updateProgressBg() {
       this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`;
-    },
-    getReadTimeText() {
-      return this.$t("book.haveRead").replace("$1", this.getReadTimeByMinute());
-    },
-    getReadTimeByMinute() {
-      const readTime = getReadTime(this.fileName);
-      if (!readTime) {
-        return 0;
-      } else {
-        return Math.ceil(readTime / 60);
-      }
     },
   },
   updated() {
