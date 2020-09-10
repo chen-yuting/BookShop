@@ -1,7 +1,12 @@
 <template>
+  <!-- 底部菜单 -->
   <div>
     <transition name="slide-up">
-      <div class="menu-wrapper" :class="{'hide-box-shadow':!menuVisible || settingVisible>=0}" v-show="menuVisible">
+      <div
+        class="menu-wrapper"
+        :class="{'hide-box-shadow':!menuVisible || settingVisible>=0}"
+        v-show="menuVisible"
+      >
         <div class="icon-wrapper">
           <!-- 目录 -->
           <span class="icon-menu icon" @click="showSetting(3)"></span>
@@ -36,7 +41,7 @@ export default {
     EbookSettingFontPopup,
     EbookSettingTheme,
     EbookSettingProgress,
-    EbookSlide
+    EbookSlide,
   },
   methods: {
     showSetting(key) {

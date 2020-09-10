@@ -1,6 +1,8 @@
 <template>
+  <!-- 阅读器 -->
   <div class="ebook-reader">
     <div id="read"></div>
+    <div class="ebook-reader-mask" @click="onMaskClick" @touchmove="move" @touchend="moveEnd"></div>
   </div>
 </template>
 
@@ -144,6 +146,36 @@ export default {
         }
         event.stopPropagation();
       });
+      this.rendition.on("touchmove", (event) => {});
+    },
+
+    onMaskClick(e) {
+      const offsetX = e.offsetX;
+      const width = window.innerWidth;
+      if (offsetX > 0 && offsetX < width * 0.3) {
+        this.prevPage();
+      } else if (offsetX > 0 && offsetX > width * 0.7) {
+        this.nextPage();
+      } else {
+        this.toggleTitleAndMenu();
+      }
+    },
+
+    move(e) {
+      let offsetY = 0;
+      if (this.firstOffsetY) {
+        offsetY = e.changedTouches[0].clientY - this.firstOffsetY;
+        this.setOffsetY(offsetY);
+      } else {
+        this.firstOffsetY = e.changedTouches[0].clientY;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    moveEnd(e) {
+      this.setOffsetY(0);
+      this.firstOffsetY = null;
     },
 
     parseBook() {
@@ -199,4 +231,18 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/styles/global";
+.ebook-reader {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .ebook-reader-mask {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 字体设置 -->
   <transition name="popup-slide-up">
     <div class="ebook-popup-list" v-show="fontFamilyVisible">
       <div class="ebook-popup-title">
@@ -38,9 +39,9 @@ export default {
   methods: {
     setFontFamily(font) {
       this.setDefaultFontFamily(font);
-      saveFontFamily(this.fileName,font);
+      saveFontFamily(this.fileName, font);
       if (font == "Default") {
-        this.currentBook.rendition.themes.font('Times New Roman');
+        this.currentBook.rendition.themes.font("Times New Roman");
       } else {
         this.currentBook.rendition.themes.font(font);
       }
