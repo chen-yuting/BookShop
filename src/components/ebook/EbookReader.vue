@@ -2,7 +2,15 @@
   <!-- 阅读器 -->
   <div class="ebook-reader">
     <div id="read"></div>
-    <div class="ebook-reader-mask" @click="onMaskClick" @touchmove="move" @touchend="moveEnd"></div>
+    <div
+      class="ebook-reader-mask"
+      @click="onMaskClick"
+      @touchmove="move"
+      @touchend="moveEnd"
+      @mousedown.left="onMouseEnter"
+      @mousemove.left="onMouseMove"
+      @mouseup.left="onMouseEnd"
+    ></div>
   </div>
 </template>
 
@@ -90,6 +98,7 @@ export default {
       this.rendition = this.book.renderTo("read", {
         width: window.innerWidth,
         height: window.innerHeight,
+        method: "default",
       });
       const location = getLocation(this.fileName);
       if (location) {
@@ -150,6 +159,11 @@ export default {
     },
 
     onMaskClick(e) {
+      // 鼠标点击时会自动调用该方法
+      if (this.mouseState && (this.mouseState == 2 || this.mouseState == 3)) {
+        // 鼠标点击拖动添加书签时，不进行判断翻页
+        return;
+      }
       const offsetX = e.offsetX;
       const width = window.innerWidth;
       if (offsetX > 0 && offsetX < width * 0.3) {
@@ -176,6 +190,45 @@ export default {
     moveEnd(e) {
       this.setOffsetY(0);
       this.firstOffsetY = null;
+    },
+
+    onMouseEnter(e) {
+      this.mouseState = 1;
+      this.mouseStartTime = e.timeStamp;
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    onMouseMove(e) {
+      if (this.mouseState == 1) {
+        this.mouseState = 2;
+      } else if (this.mouseState == 2) {
+        let offsetY = 0;
+        if (this.firstOffsetY) {
+          offsetY = e.clientY - this.firstOffsetY;
+          this.setOffsetY(offsetY);
+        } else {
+          this.firstOffsetY = e.clientY;
+        }
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    onMouseEnd(e) {
+      if (this.mouseState == 2) {
+        this.setOffsetY(0);
+        this.firstOffsetY = null;
+        this.mouseState = 3;
+      } else {
+        this.mouseState = 4;
+      }
+      const time = e.timeStamp - this.mouseStartTime;
+      if (time < 100) {
+        this.mouseState = 4;
+      }
+      e.preventDefault();
+      e.stopPropagation();
     },
 
     parseBook() {
@@ -213,6 +266,7 @@ export default {
       this.setCurrentBook(this.book);
       this.initRendition();
       this.initGesture();
+      // 渲染目录
       this.parseBook();
       this.book.ready
         .then(() => {
@@ -220,7 +274,31 @@ export default {
             (750 * (window.innerWidth / 375) * getFontSize(this.fileName)) / 16
           );
         })
-        .then((result) => {
+        .then((locations) => {
+          // 分页
+          this.navigation.forEach((nav) => {
+            nav.pagelist = [];
+          });
+          locations.forEach((item) => {
+            const loc = item.match(/\[(.*)\]!/)[1];
+            this.navigation.forEach((nav) => {
+              if (nav.href) {
+                const href = nav.href.match(/^(.*)\.html$/)[1];
+                if (href == loc) {
+                  nav.pagelist.push(item);
+                }
+              }
+            });
+            let currentPage = 1;
+            this.navigation.forEach((nav, index) => {
+              if (index == 0) {
+                nav.page = 1;
+              } else {
+                nav.page = currentPage;
+              }
+              currentPage = currentPage + nav.pagelist.length;
+            });
+          });
           this.setBookAvailable(true);
           this.refreshLocation();
         });
@@ -237,7 +315,7 @@ export default {
   overflow: hidden;
   .ebook-reader-mask {
     position: absolute;
-    z-index: 100;
+    z-index: 150;
     left: 0;
     top: 0;
     background: transparent;

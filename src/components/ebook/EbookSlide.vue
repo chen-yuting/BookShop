@@ -64,7 +64,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 300;
+  z-index: 350;
   display: flex;
   .content {
     flex: 0 0 85%;

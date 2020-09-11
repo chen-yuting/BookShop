@@ -33,7 +33,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 101;
+  z-index: 201;
   width: 100%;
   height: px2rem(48);
   font-size: px2rem(25);
