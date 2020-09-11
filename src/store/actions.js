@@ -1,3 +1,4 @@
+//简化成this调用
 const actions = {
     setFontFamilyVisible: ({ commit }, visible) => {
       return commit('SET_FONT_FAMILY_VISIBLE', visible)
@@ -55,6 +56,9 @@ const actions = {
     },
     setOffsetY({ commit }, offsetY) {
       return commit('SET_OFFSETY', offsetY)
+    },
+    setHotSearchOffsetY({ commit }, hotSearchOffsetY) {
+      return commit('SET_HOT_SEARCH_OFFSETY', hotSearchOffsetY)
     },
   }
   

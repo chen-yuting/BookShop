@@ -1,6 +1,8 @@
 // 1rem = ratio px
 // 1px = (1 / ratio) rem
 $ratio:375/10;
+$animationTime:0.2s;
+$animationType:linear;
 
 @function px2rem($px) {
   @return ($px/$ratio)+rem;
@@ -24,6 +26,13 @@ $ratio:375/10;
   align-items: center;
 }
 
+@mixin columnLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 @mixin ellipsis {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -44,7 +53,19 @@ $ratio:375/10;
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.icon {
+  color: #666;
+  font-size: px2rem(16);
+}
+
+.title {
+  color: #666;
+  font-size: px2rem(16);
+  font-weight: bold;
 }

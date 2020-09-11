@@ -1,3 +1,4 @@
+//简化成this调用
 const book = {
     fileName:state=>state.book.fileName,
     menuVisible:state=>state.book.menuVisible,
@@ -18,6 +19,7 @@ const book = {
     pagelist: state => state.book.pagelist,
     offsetY: state => state.book.offsetY,
     isBookmark: state => state.book.isBookmark,
+    hotSearchOffsetY: state => state.store.hotSearchOffsetY,
 }
 
 export default book;
