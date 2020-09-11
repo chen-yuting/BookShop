@@ -41,11 +41,6 @@
 import { ebookMixin } from "../../utils/mixin";
 export default {
   mixins: [ebookMixin],
-  computed: {
-    getSectionName() {
-      return this.section ? this.navigation[this.section].label : "";
-    },
-  },
   methods: {
     onProgressChange(progress) {
       this.setProgress(progress).then(() => {
