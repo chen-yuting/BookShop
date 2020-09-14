@@ -18,10 +18,9 @@
 
 <script>
 import { realPx } from "../../utils/utils";
-import Bookmark from "./Bookmark";
+import Bookmark from "../common/Bookmark";
 import { ebookMixin } from "../../utils/mixin";
-import { getBookmark } from "../../utils/localStorage";
-import { saveBookmark } from "../../../../vue-imooc-ebook/src/utils/localStorage";
+import { getBookmark,saveBookmark } from "../../utils/localStorage";
 const BLUE = "#346cbc";
 const WHITE = "#fff";
 export default {
