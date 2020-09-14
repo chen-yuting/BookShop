@@ -1,5 +1,5 @@
 <template>
-  <!-- 滚动组件 -->
+  <!-- 滚动通用组件 -->
   <div
     class="scroll-wrapper"
     :class="{'no-scroll': ifNoScroll}"

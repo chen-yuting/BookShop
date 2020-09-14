@@ -39,12 +39,12 @@
     >
       <div class="book-card-wrapper">
         <div class="img-wrapper">
-          <img class="img" :src="data?data.cover:''" />
+          <img class="img" v-lazy="data?data.cover:''" />
         </div>
         <div class="content-wrapper">
           <div class="title">{{data?data.title:''}}</div>
           <div class="author sub-title-medium">{{data?data.author:''}}</div>
-          <div class="category">{{}}</div>
+          <div class="category">{{categoryText()}}</div>
         </div>
         <div class="read-btn" @click.stop="showBookDetail(data)">{{$t('home.readNow')}}</div>
       </div>
@@ -213,7 +213,7 @@ export default {
     },
     categoryText() {
       if (this.data) {
-        return this.categoryText(this.data.category, this);
+        return categoryText(this.data.category, this);
       } else {
         return "";
       }

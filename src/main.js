@@ -6,6 +6,7 @@ import i18n from './lang'
 import './assets/styles/icon.css'
 import './assets/styles/global.scss'
 import './mock'
+import './lazy'
 
 Vue.config.productionTip = false
 
