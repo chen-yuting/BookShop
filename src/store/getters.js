@@ -20,6 +20,7 @@ const book = {
     offsetY: state => state.book.offsetY,
     isBookmark: state => state.book.isBookmark,
     hotSearchOffsetY: state => state.store.hotSearchOffsetY,
+    flapCardVisible: state => state.store.flapCardVisible,
 }
 
 export default book;
