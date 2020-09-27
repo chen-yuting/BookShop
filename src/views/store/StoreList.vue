@@ -1,7 +1,17 @@
 <template>
   <div class="book-list-wrapper">
-    <detail-title :title="title" :showShelf="true" @back="back" ref="title"></detail-title>
-    <scroll class="book-list-scroll-wrapper" :top="42" @onScroll="onScroll" ref="scroll">
+    <detail-title
+      :title="title"
+      :showShelf="true"
+      @back="back"
+      ref="title"
+    ></detail-title>
+    <scroll
+      class="book-list-scroll-wrapper"
+      :top="42"
+      @onScroll="onScroll"
+      ref="scroll"
+    >
       <featured
         :data="value"
         :titleText="titleText ? titleText : getCategoryText(key)"
@@ -14,7 +24,7 @@
 </template>
 
 <script>
-import DetailTitle from "@/components/detail/DetaiTitle";
+import DetailTitle from "@/components/detail/DetailTitle";
 import Scroll from "@/components/common/Scroll";
 import Featured from "@/components/home/Featured";
 import { realPx } from "@/utils/utils";

@@ -1,3 +1,5 @@
+//此文件已无用，本用来模拟mock接口
+
 import Mock from 'mockjs'
 import BookHomeApi from './bookHome'
 import BookShelfApi from './bookShelf'
@@ -8,9 +10,11 @@ import BookFlatList from './bookFlatList'
 //   timeout: '350-600'
 // })
 
-Mock.mock(/\/book\/home/, 'get', BookHomeApi)
-Mock.mock(/\/book\/shelf/, 'get', BookShelfApi)
-Mock.mock(/\/book\/list/, 'get', BookHomeList)
-Mock.mock(/\/book\/flat-list/, 'get', BookFlatList)
+
+// 已在vue.config.js中另外模拟mock
+// Mock.mock(/\/book\/home/, 'get', BookHomeApi)
+// Mock.mock(/\/book\/shelf/, 'get', BookShelfApi)
+// Mock.mock(/\/book\/list/, 'get', BookHomeList)
+// Mock.mock(/\/book\/flat-list/, 'get', BookFlatList)
 
 export default Mock

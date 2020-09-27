@@ -4,12 +4,24 @@
     <flap-card :data="random"></flap-card>
     <scroll :top="scrollTop" @onScroll="onScroll" ref="scroll">
       <div class="banner-wrapper">
-        <div class="banner-img" :style="{backgroundImage:`url('${banner}')`}"></div>
+        <div
+          class="banner-img"
+          :style="{ backgroundImage: `url('${banner}')` }"
+        ></div>
       </div>
       <guess-you-like :data="guessYouLike"></guess-you-like>
       <recommend class="recommend" :data="recommend"></recommend>
-      <featured class="featured" :data="featured"></featured>
-      <div class="category-list-wrapper" v-for="(item, index) in categoryList" :key="index">
+      <featured
+        class="featured"
+        :data="featured"
+        :titleText="$t('home.featured')"
+        :btnText="$t('home.seeAll')"
+      ></featured>
+      <div
+        class="category-list-wrapper"
+        v-for="(item, index) in categoryList"
+        :key="index"
+      >
         <category-book :data="item"></category-book>
       </div>
       <category class="category" :data="categories"></category>
@@ -56,7 +68,6 @@ export default {
     home().then((response) => {
       if (response && response.status == 200) {
         const data = response.data;
-        console.log(data);
         const randomIndex = Math.floor(Math.random() * data.random.length);
         this.random = data.random[randomIndex];
         this.banner = data.banner;

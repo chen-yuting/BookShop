@@ -2,9 +2,9 @@
   <!-- 精选 -->
   <div class="featured">
     <title-view
-      :label="$t('home.featured')"
-      :btn="$t('home.seeAll')"
-      v-if="data && data.length > 0"
+      :label="titleText"
+      :btn="btnText"
+      v-if="titleVisible && data && data.length > 0"
     ></title-view>
     <div class="featured-list">
       <div class="featured-item-wrapper">
@@ -18,9 +18,13 @@
             <img class="img" v-lazy="item.cover" />
           </div>
           <div class="content-wrapper">
-            <div class="title title-small" ref="title">{{item.title}}</div>
-            <div class="author sub-title-tiny" ref="author">{{item.author}}</div>
-            <div class="category third-title-tiny" ref="category">{{categoryText(item.category)}}</div>
+            <div class="title title-small" ref="title">{{ item.title }}</div>
+            <div class="author sub-title-tiny" ref="author">
+              {{ item.author }}
+            </div>
+            <div class="category third-title-tiny" ref="category">
+              {{ categoryText(item.category) }}
+            </div>
           </div>
         </div>
       </div>
@@ -41,6 +45,16 @@ export default {
   },
   props: {
     data: Array,
+    titleVisible: {
+      type: Boolean,
+      default: true,
+    },
+    titleText: {
+      type: String,
+    },
+    btnText: {
+      type: String,
+    },
   },
   computed: {
     width() {

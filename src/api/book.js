@@ -10,12 +10,12 @@ export function home() {
 }
 
 //线上地址
-export function detail(book) {
+export function detail(fileName) {
   return axios({
     method: 'get',
     url: `${process.env.VUE_APP_BOOK_URL}/book/detail`,
     params: {
-      fileName: book.fileName
+      fileName: fileName
     }
   })
 }

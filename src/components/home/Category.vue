@@ -39,7 +39,7 @@ export default {
   methods: {
     showBookCategory(item) {
       this.$router.push({
-        path: "/book-store/list",
+        path: "/store/list",
         query: {
           category: getCategoryName(item.category),
           categoryText: this.categoryText(item.category),

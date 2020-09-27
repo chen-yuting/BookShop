@@ -1,7 +1,7 @@
 <template>
   <!-- 详情页面的标题栏组件 -->
   <div class="detail-title-wrapper" :class="{'hide-shadow': ifHideShadow}">
-    <div class="title-left-wrapper" @click="back">
+    <div class="title-left-wrapper" @click="back()">
       <span class="icon-back"></span>
     </div>
     <div class="title-right-wrapper">
@@ -37,7 +37,7 @@ export default {
       this.ifHideShadow = true;
     },
     back() {
-      this.$emit("back");
+      this.$router.go(-1);
     },
   },
 };

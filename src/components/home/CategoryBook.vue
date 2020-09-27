@@ -4,7 +4,7 @@
     <title-view
       :label="categoryText(data.category)"
       :btn="$t('home.seeAll')"
-      @onClick="showBookCategory"
+      @onClick="showBookCategory()"
     ></title-view>
     <div class="category-book-list">
       <div
@@ -39,8 +39,9 @@ export default {
   },
   methods: {
     showBookCategory() {
+      console.log(this.data)
       this.$router.push({
-        path: "/book-store/list",
+        path: "/store/list",
         query: {
           category: getCategoryName(this.data.category),
           categoryText: this.categoryText(this.data.category),

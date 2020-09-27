@@ -1,24 +1,37 @@
 <template>
   <!-- 搜索框组件 -->
   <div>
-    <div class="search-bar" :class="{'hide-title':!titleVisible,'hide-shadow':!shadowVisible}">
+    <div
+      class="search-bar"
+      :class="{ 'hide-title': !titleVisible, 'hide-shadow': !shadowVisible }"
+    >
       <transition name="title-move">
         <!-- 标题 -->
         <div class="search-bar-title-wrapper" v-show="titleVisible">
           <div class="title-text-wrapper">
-            <span class="title-text title">{{$t('home.title')}}</span>
+            <span class="title-text title">{{ $t("home.title") }}</span>
           </div>
           <div class="title-icon-shake-wrapper" @click="showFlapCard()">
             <span class="icon-shake icon"></span>
           </div>
         </div>
       </transition>
-      <div class="title-icon-back-wrapper" :class="{'hide-title':!titleVisible}" @click="back()">
+      <div
+        class="title-icon-back-wrapper"
+        :class="{ 'hide-title': !titleVisible }"
+        @click="back()"
+      >
         <span class="icon-back icon"></span>
       </div>
       <!-- 搜索框 -->
-      <div class="search-bar-input-wrapper" :class="{'hide-title':!titleVisible}">
-        <div class="search-bar-blank" :class="{'hide-title':!titleVisible}"></div>
+      <div
+        class="search-bar-input-wrapper"
+        :class="{ 'hide-title': !titleVisible }"
+      >
+        <div
+          class="search-bar-blank"
+          :class="{ 'hide-title': !titleVisible }"
+        ></div>
         <div class="search-bar-input">
           <span class="icon-search icon"></span>
           <input
@@ -27,11 +40,15 @@
             :placeholder="$t('home.hint')"
             v-model="searchText"
             @click="showHotSearch()"
+            @keyup.13.exact="search()"
           />
         </div>
       </div>
     </div>
-    <hot-search-list v-show="hotSearchVisible" ref="hotSearchList"></hot-search-list>
+    <hot-search-list
+      v-show="hotSearchVisible"
+      ref="hotSearchList"
+    ></hot-search-list>
   </div>
 </template>
 
@@ -96,6 +113,14 @@ export default {
         this.$refs.hotSearchList.reset();
       });
     },
+    search() {
+      this.$router.push({
+        path: "/store/list",
+        query: {
+          keyword: this.searchText,
+        },
+      });
+    },
     back() {
       if (this.offsetY > 0) {
         this.hideTitle();
@@ -104,7 +129,11 @@ export default {
         this.showTitle();
         this.hideShadow();
       }
-      this.hideHotSearch();
+      if (this.hotSearchVisible) {
+        this.hideHotSearch();
+      } else {
+        this.$router.push("/store/shelf");
+      }
     },
   },
 };

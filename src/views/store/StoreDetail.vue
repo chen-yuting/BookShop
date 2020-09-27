@@ -1,34 +1,53 @@
 <template>
   <div class="book-detail">
-    <detail-title @back="back" :showShelf="true" ref="title"></detail-title>
-    <scroll class="content-wrapper" :top="42" :bottom="52" @onScroll="onScroll" ref="scroll">
-      <book-info :cover="cover" :title="title" :author="author" :desc="desc"></book-info>
+    <detail-title :showShelf="true" ref="title"></detail-title>
+    <scroll
+      class="content-wrapper"
+      :top="42"
+      :bottom="52"
+      @onScroll="onScroll"
+      ref="scroll"
+    >
+      <book-info
+        :cover="cover"
+        :title="title"
+        :author="author"
+        :desc="desc"
+      ></book-info>
       <div class="book-detail-content-wrapper">
-        <div class="book-detail-content-title">{{$t('detail.copyright')}}</div>
+        <div class="book-detail-content-title">
+          {{ $t("detail.copyright") }}
+        </div>
         <div class="book-detail-content-list-wrapper">
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.publisher')}}</div>
-            <div class="book-detail-content-text">{{publisher}}</div>
+            <div class="book-detail-content-label">
+              {{ $t("detail.publisher") }}
+            </div>
+            <div class="book-detail-content-text">{{ publisher }}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.category')}}</div>
-            <div class="book-detail-content-text">{{categoryText}}</div>
+            <div class="book-detail-content-label">
+              {{ $t("detail.category") }}
+            </div>
+            <div class="book-detail-content-text">{{ categoryText }}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.lang')}}</div>
-            <div class="book-detail-content-text">{{lang}}</div>
+            <div class="book-detail-content-label">{{ $t("detail.lang") }}</div>
+            <div class="book-detail-content-text">{{ lang }}</div>
           </div>
           <div class="book-detail-content-row">
-            <div class="book-detail-content-label">{{$t('detail.ISBN')}}</div>
-            <div class="book-detail-content-text">{{isbn}}</div>
+            <div class="book-detail-content-label">{{ $t("detail.ISBN") }}</div>
+            <div class="book-detail-content-text">{{ isbn }}</div>
           </div>
         </div>
       </div>
       <div class="book-detail-content-wrapper">
-        <div class="book-detail-content-title">{{$t('detail.navigation')}}</div>
+        <div class="book-detail-content-title">
+          {{ $t("detail.navigation") }}
+        </div>
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.navigation">
-            <span class="loading-text">{{$t('detail.loading')}}</span>
+            <span class="loading-text">{{ $t("detail.loading") }}</span>
           </div>
           <div class="book-detail-content-item-wrapper">
             <div
@@ -39,30 +58,40 @@
             >
               <div
                 class="book-detail-content-navigation-text"
-                :class="{'is-sub': item.deep> 1}"
+                :class="{ 'is-sub': item.deep > 1 }"
                 :style="itemStyle(item)"
                 v-if="item.label"
-              >{{item.label}}</div>
+              >
+                {{ item.label }}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="book-detail-content-wrapper">
-        <div class="book-detail-content-title">{{$t('detail.trial')}}</div>
+        <div class="book-detail-content-title">{{ $t("detail.trial") }}</div>
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.displayed">
-            <span class="loading-text">{{$t('detail.loading')}}</span>
+            <span class="loading-text">{{ $t("detail.loading") }}</span>
           </div>
         </div>
         <div id="preview" v-show="this.displayed" ref="preview"></div>
       </div>
     </scroll>
     <div class="bottom-wrapper">
-      <div class="bottom-btn" @click.stop.prevent="readBook()">{{$t('detail.read')}}</div>
-      <div class="bottom-btn" @click.stop.prevent="trialListening()">{{$t('detail.listen')}}</div>
+      <div class="bottom-btn" @click.stop.prevent="readBook()">
+        {{ $t("detail.read") }}
+      </div>
+      <div class="bottom-btn" @click.stop.prevent="trialListening()">
+        {{ $t("detail.listen") }}
+      </div>
       <div class="bottom-btn" @click.stop.prevent="addOrRemoveShelf()">
         <span class="icon-check" v-if="inBookShelf"></span>
-        {{inBookShelf ? $t('detail.isAddedToShelf') : $t('detail.addOrRemoveShelf')}}
+        {{
+          inBookShelf
+            ? $t("detail.isAddedToShelf")
+            : $t("detail.addOrRemoveShelf")
+        }}
       </div>
     </div>
     <toast :text="toastText" ref="toast"></toast>
@@ -70,12 +99,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-import DetailTitle from "@/components/detail/DetaiTitle";
+import DetailTitle from "@/components/detail/DetailTitle";
 import BookInfo from "@/components/detail/BookInfo";
 import Scroll from "@/components/common/Scroll";
 import Toast from "@/components/common/Toast";
 import { removeFromBookShelf, addToShelf } from "@/utils/book";
-import { flatList, detail } from "@/api/book";
+import { detail } from "@/api/book";
 import { px2rem, realPx } from "@/utils/utils";
 import { getLocalForage } from "@/utils/localForage";
 import { getLocalStorage } from "@/utils/localStorage";
@@ -178,12 +207,12 @@ export default {
       getLocalForage(this.bookItem.fileName, (err, value) => {
         if (!err && value instanceof Blob) {
           this.$router.push({
-            path: `/ebook/${this.bookItem.fileName}`,
+            path: `/ebook/${this.bookItem.categoryText}|${this.bookItem.fileName}`,
           });
         } else {
           // this.showToast(this.$t('shelf.downloadFirst'))
           this.$router.push({
-            path: `/ebook/${this.bookItem.fileName}`,
+            path: `/ebook/${this.bookItem.categoryText}|${this.bookItem.fileName}`,
             query: {
               opf: this.opf,
             },
@@ -195,7 +224,7 @@ export default {
       getLocalForage(this.bookItem.fileName, (err, value) => {
         if (!err && value instanceof Blob) {
           this.$router.push({
-            path: "/book-store/book-speaking",
+            path: "/store/book-speaking",
             query: {
               fileName: this.bookItem.fileName,
             },
@@ -203,7 +232,7 @@ export default {
         } else {
           // this.showToast(this.$t('shelf.downloadFirst'))
           this.$router.push({
-            path: "/book-store/book-speaking",
+            path: "/store/book-speaking",
             query: {
               fileName: this.bookItem.fileName,
               opf: this.opf,
@@ -216,7 +245,7 @@ export default {
       getLocalForage(this.bookItem.fileName, (err, value) => {
         if (!err && value instanceof Blob) {
           this.$router.push({
-            path: `/ebook/${this.bookItem.fileName}`,
+            path: `/ebook/${this.bookItem.categoryText}|${this.bookItem.fileName}`,
             query: {
               navigation: item.href,
             },
@@ -224,7 +253,7 @@ export default {
         } else {
           // this.showToast(this.$t('shelf.downloadFirst'))
           this.$router.push({
-            path: `/ebook/${this.bookItem.fileName}`,
+            path: `/ebook/${this.bookItem.categoryText}|${this.bookItem.fileName}`,
             query: {
               navigation: item.href,
               opf: this.opf,
@@ -288,27 +317,11 @@ export default {
         }
       });
     },
-    findBookFromList(fileName) {
-      flatList().then((response) => {
-        if (response.status === 200) {
-          const bookList = response.data.data.filter(
-            (item) => item.fileName === fileName
-          );
-          if (bookList && bookList.length > 0) {
-            this.bookItem = bookList[0];
-            console.log(this.bookItem);
-            this.initBook();
-          }
-        }
-      });
-    },
     init() {
       const fileName = this.$route.query.fileName;
       this.categoryText = this.$route.query.category;
       if (fileName) {
-        detail({
-          fileName: fileName,
-        }).then((response) => {
+        detail(fileName).then((response) => {
           if (
             response.status === 200 &&
             response.data.error_code === 0 &&
@@ -329,9 +342,6 @@ export default {
         });
       }
       this.bookShelf = getLocalStorage("bookShelf");
-    },
-    back() {
-      this.$router.go(-1);
     },
     display(location) {
       if (this.$refs.preview) {

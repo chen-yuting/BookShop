@@ -1,7 +1,10 @@
 <template>
   <!-- 热门推荐 -->
   <div class="recommend">
-    <title-view :label="$t('home.recommend')" :btn="$t('home.seeAll')"></title-view>
+    <title-view
+      :label="$t('home.recommend')"
+      :btn="$t('home.seeAll')"
+    ></title-view>
     <div class="recommend-list">
       <div
         class="recommend-item"
@@ -13,8 +16,10 @@
           <img class="img" v-lazy="item.cover" />
         </div>
         <div class="content-wrapper">
-          <div class="title title-medium" ref="title">{{item.title}}</div>
-          <div class="num sub-title" ref="num">{{$t('home.readers').replace('$1', item.readers)}}</div>
+          <div class="title title-medium" ref="title">{{ item.title }}</div>
+          <div class="num sub-title" ref="num">
+            {{ $t("home.readers").replace("$1", item.readers) }}
+          </div>
         </div>
       </div>
     </div>
