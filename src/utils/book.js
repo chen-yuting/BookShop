@@ -1,4 +1,4 @@
-import { getReadTime } from "./localStorage";
+import { getReadTime,getLocalStorage, setLocalStorage, removeLocalStorage } from "./localStorage";
 import { realPx } from "./utils";
 
 export const FONT_SIZE_LIST = [
@@ -108,3 +108,43 @@ export function getReadTimeByMinute(fileName) {
 export function flatten(array){
   return [].concat(...array.map(item=>[].concat(item,...flatten(item.subitems))));
 }
+
+// const BOOK_SHELF_KEY = 'bookShelf'
+
+// export function addToShelf(book) {
+//   let bookList = getLocalStorage(BOOK_SHELF_KEY);
+//   bookList = clearAddFromBookList(bookList);
+//   book.type = 1;
+//   bookList.push(book);
+//   bookList.forEach((item, index) => {
+//     item.id = index + 1;
+//   })
+//   appendAddToBookList(bookList);
+//   setLocalStorage(BOOK_SHELF_KEY, bookList);
+// }
+
+// export function clearAddFromBookList(bookList) {
+//   return bookList.filter(item => {
+//     return item.type !== 3;
+//   })
+// }
+
+// export function appendAddToBookList(bookList) {
+//   bookList.push({
+//     cover: '',
+//     title: '',
+//     type: 3,
+//     id: Number.MAX_SAFE_INTEGER
+//   })
+// }
+
+// export function removeFromBookShelf(bookItem) {
+//   let bookList = getLocalStorage(BOOK_SHELF_KEY)
+//   bookList = bookList.filter(item => {
+//     if (item.itemList) {
+//       item.itemList = item.itemList.filter(subItem => subItem.fileName !== bookItem.fileName)
+//     }
+//     return item.fileName !== bookItem.fileName
+//   })
+//   setLocalStorage(BOOK_SHELF_KEY, bookList)
+// }

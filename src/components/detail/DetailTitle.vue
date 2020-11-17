@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     showBookShelf() {
-      this.$router.push("/book-store/shelf");
+      this.$router.push("/store/shelf");
     },
     showShadow() {
       this.ifHideShadow = false;

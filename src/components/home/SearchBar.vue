@@ -215,8 +215,6 @@ export default {
       box-sizing: border-box;
       border: px2rem(1) solid #eee;
       @include left;
-      .icon-search {
-      }
       .input {
         width: 100%;
         height: px2rem(22);

@@ -1,0 +1,25 @@
+<template>
+  <!-- 书架列表的最后一个框添加 -->
+  <div class="shelf-item-add">
+    <span class="icon-add"></span>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style lang="scss" scoped>
+@import "../../assets/styles/global";
+.shelf-item-add {
+  width: 100%;
+  height: 100%;
+  border: px2rem(1) solid #ccc;
+  box-sizing: border-box;
+  @include center;
+  .icon-add {
+    font-size: px2rem(40);
+    color: #ccc;
+  }
+}
+</style>

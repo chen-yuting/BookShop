@@ -178,3 +178,45 @@ export const categoryList = {
   'Psychology': 21,
   'Statistics': 22
 }
+
+export function appendAddToShelf(list) {
+  list.push({
+    id: -1,
+    type: 3
+  })
+  return list;
+}
+
+export function removeAddFromShelf(list) {
+  return list.filter(item => {
+    return item.type !== 3;
+  })
+}
+
+export function gotoStoreHome(vue) {
+  vue.$router.push({
+    path:'/store/home'
+  });
+}
+
+export function gotoBookDetail(vue,book) {
+  vue.$router.push({
+    path:'/store/detail',
+    query:{
+      fileName:book.fileName,
+      category:book.categoryText
+    }
+  })
+}
+
+export function computeId(list) {
+  return list.map((book, index) => {
+      if (book.type !== 3) {
+          book.id = index + 1
+          if (book.itemList) {
+              book.itemList = computeId(book.itemList)
+          }
+      }
+      return book
+  })
+}
