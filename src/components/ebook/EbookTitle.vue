@@ -7,7 +7,7 @@
       </div>
       <div class="right">
         <div class="icon-wrapper">
-          <span class="icon-shelf icon"></span>
+          <span class="icon-shelf icon" @click="showBookShelf()"></span>
           <span class="icon-cart icon"></span>
           <span class="icon-more icon"></span>
         </div>
@@ -23,6 +23,9 @@ export default {
   methods: {
     back() {
       this.$router.go(-1);
+    },
+    showBookShelf() {
+      this.$router.push("/store/shelf");
     },
   },
 };

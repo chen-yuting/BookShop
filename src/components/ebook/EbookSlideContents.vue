@@ -57,7 +57,7 @@
           :class="{'selected':section==index}"
           @click="displayContent(item.href)"
         >{{item.label}}</span>
-        <span class="slide-contents-item-page">{{item.page}}</span>
+        <!-- <span class="slide-contents-item-page">{{item.page}}</span> -->
       </div>
     </scroll>
     <!-- 搜索结果 -->
